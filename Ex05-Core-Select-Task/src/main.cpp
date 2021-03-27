@@ -1,5 +1,5 @@
 #include <Arduino.h>
-//API REF: https://www.freertos.org/uxTaskGetStackHighWaterMark.html
+//API REF: https://www.freertos.org/a00125.html
 /* Bibliotecas FreeRTOS */
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -14,23 +14,16 @@ TaskHandle_t taskCounterHandle = NULL;
 
 void vTaskAtuator(void *pvParameters)
 {
-  UBaseType_t stackUsage;
   int pin = (int)pvParameters;
   pinMode(pin, OUTPUT);
   while (1)
   {
     digitalWrite(pin, !digitalRead(pin));
     vTaskDelay(pdMS_TO_TICKS(200));
-
-    stackUsage = uxTaskGetStackHighWaterMark(NULL);
-    Serial.print(pcTaskGetTaskName(NULL));
-    Serial.print(" : ");
-    Serial.println(stackUsage);
   }
 }
 void vTaskCounter(void *pvParameters)
 {
-  UBaseType_t stackUsage;
   Serial.begin(9600);
   int count = 0;
   while (1)
@@ -43,10 +36,6 @@ void vTaskCounter(void *pvParameters)
     }
 
     vTaskDelay(pdMS_TO_TICKS(1000));
-    stackUsage = uxTaskGetStackHighWaterMark(NULL);
-    Serial.print(pcTaskGetTaskName(NULL));
-    Serial.print(" : ");
-    Serial.println(stackUsage);
   }
 }
 
