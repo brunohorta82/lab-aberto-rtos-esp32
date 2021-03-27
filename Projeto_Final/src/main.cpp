@@ -72,14 +72,8 @@ void vTaskPublish(void *pvParameters)
       else
       {
         Serial.printf("ONLINE: Temperatura: %f Humidade: %f \n", sensor.temperature, sensor.humidity);
-        String message = "";
-        message.concat("Bruno Horta ");
-        message.concat("Temperature: ");
-        message.concat(sensor.temperature);
-        message.concat(" ");
-        message.concat("Humidity: ");
-        message.concat(sensor.humidity);
-        mqttClient.publish("sensor/bruno_horta/status", message.c_str());
+        mqttClient.publish("sensor/bruno_horta/temperature", String(sensor.temperature).c_str());
+        mqttClient.publish("sensor/bruno_horta/humidity", String(sensor.humidity).c_str());
       }
     }
     vTaskDelay(pdMS_TO_TICKS(1)); //Prevenir Starvation
